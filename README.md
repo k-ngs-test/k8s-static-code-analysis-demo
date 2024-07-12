@@ -6,7 +6,18 @@ k8s-static-code-analysis-demo
 - sample実行用に用意したコードで `helm create mywebapp` を実行して用意
 - 異常を発生させるために適宜書き換える
 
-## 各種静的解析実行手順
+## 参考
+
+- https://v3-1-0.helm.sh/docs/helm/helm_lint/
+- https://github.com/yannh/kubeconform
+- https://polaris.docs.fairwinds.com/infrastructure-as-code/
+- https://aquasecurity.github.io/trivy/v0.48/docs/coverage/iac/helm/
+- https://github.com/helm/chart-testing
+- https://github.com/helm/chart-testing-action
+- https://github.com/helm/charts-repo-actions-demo
+- https://helm.sh/docs/topics/charts/
+
+## 手動実行サンプル
 
 ### Helm
 
@@ -917,9 +928,3 @@ See https://avd.aquasec.com/misconfig/ksv117
 
 </details>
 
-## 参考
-
-- https://v3-1-0.helm.sh/docs/helm/helm_lint/
-- https://github.com/yannh/kubeconform
-- https://polaris.docs.fairwinds.com/infrastructure-as-code/
-- https://aquasecurity.github.io/trivy/v0.48/docs/coverage/iac/helm/
