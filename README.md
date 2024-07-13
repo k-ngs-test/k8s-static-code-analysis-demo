@@ -1,6 +1,15 @@
 k8s-static-code-analysis-demo
 =============================
 
+## 対象
+
+- helm lint(chart-testing)
+- kubeconform
+- nova
+- polaris
+- pluto
+- trivy
+
 ## 用意したコード
 
 - sample実行用に用意したコードで `helm create mywebapp` を実行して用意
@@ -19,6 +28,8 @@ k8s-static-code-analysis-demo
 - https://qiita.com/araryo/items/f072a0cca0b098f02e44
 - https://zenn.dev/shunsuke_suzuki/articles/improve-cicd-with-github-comment
 - https://polaris.docs.fairwinds.com/infrastructure-as-code/#running-in-a-ci-pipeline
+- https://dev.to/aws-builders/improving-your-cicd-pipeline-helm-charts-security-scanning-with-trivy-and-github-actions-3315
+- https://weblog.grimoh.net/entry/2022/01/02/100000
 
 ## GitHub Actions
 
