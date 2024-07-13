@@ -1,5 +1,5 @@
 on:
-  push:
+  push: # 検証時にmainにpush時に実行されたほうが繰り返しやすいため設定
     branches:
       - 'main'
   pull_request:
@@ -43,7 +43,6 @@ jobs:
           ct lint --config ct.yaml validate-maintainers: true \
           --validate-maintainers=false # Maintainerのチェックを無効化
 
-
 # 今回はinstallをしてテストまではしないのでコメントアウト
 #       - name: Create kind cluster
 #         uses: helm/kind-action@dda0770415bac9fc20092cacbc54aa298604d140 # v1.8.0
@@ -51,3 +50,21 @@ jobs:
 # 
 #       - name: Run chart-testing (install)
 #         run: ct install --config ct.yaml
+  kubeconform:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
+        with:
+          fetch-depth: 0
+      - name: Setup action-setup-kube-tools
+        uses: yokawasa/action-setup-kube-tools@v0.11.1
+        with:
+          setup-tools: |
+            kubeconform
+            helm
+      - name: Check with kubeconform
+        run: |
+          find ./charts -maxdepth 1 -mindepth 1 \
+          | xargs -I {} helm template {} -f values/env/tes/values.yaml \
+          | kubeconform --summary --output json  # -depth 1の場合エラーになる
