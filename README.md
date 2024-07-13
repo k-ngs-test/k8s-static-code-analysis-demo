@@ -16,6 +16,17 @@ k8s-static-code-analysis-demo
 - https://github.com/helm/chart-testing-action
 - https://github.com/helm/charts-repo-actions-demo
 - https://helm.sh/docs/topics/charts/
+- https://qiita.com/araryo/items/f072a0cca0b098f02e44
+- https://zenn.dev/shunsuke_suzuki/articles/improve-cicd-with-github-comment
+- https://polaris.docs.fairwinds.com/infrastructure-as-code/#running-in-a-ci-pipeline
+
+## GitHub Actions
+
+### ローカル実行
+
+```sh
+% act pull_request --container-architecture linux/amd64
+```
 
 ## 手動実行サンプル
 
@@ -71,13 +82,13 @@ TBD
 <summary>polaris手動実行サンプル</summary>
 
 ```
-% polaris audit --helm-chart ./mywebapp --helm-values ./values/env/tes/values.yaml 
+% polaris audit  --only-show-failed-tests --helm-chart ./charts/mywebapp --helm-values ./values/env/tes/values.yaml 
 {
   "PolarisOutputVersion": "1.0",
-  "AuditTime": "2024-05-08T12:14:20+09:00",
+  "AuditTime": "2024-07-13T14:04:18+09:00",
   "SourceType": "Path",
-  "SourceName": "/var/folders/9c/l4hy_96j1zjd7yx5kblnh75w0000gn/T/916061587",
-  "DisplayName": "/var/folders/9c/l4hy_96j1zjd7yx5kblnh75w0000gn/T/916061587",
+  "SourceName": "/var/folders/0j/gnhkrzjn6gg97m_39n9xghfh0000gn/T/2806295910",
+  "DisplayName": "/var/folders/0j/gnhkrzjn6gg97m_39n9xghfh0000gn/T/2806295910",
   "ClusterInfo": {
     "Version": "unknown",
     "Nodes": 0,
@@ -86,22 +97,6 @@ TBD
     "Controllers": 2
   },
   "Results": [
-    {
-      "Name": "release-name-mywebapp",
-      "Namespace": "",
-      "Kind": "Service",
-      "Results": {},
-      "PodResult": null,
-      "CreatedTime": "0001-01-01T00:00:00Z"
-    },
-    {
-      "Name": "release-name-mywebapp",
-      "Namespace": "",
-      "Kind": "ServiceAccount",
-      "Results": {},
-      "PodResult": null,
-      "CreatedTime": "0001-01-01T00:00:00Z"
-    },
     {
       "Name": "release-name-mywebapp-test-connection",
       "Namespace": "",
@@ -126,33 +121,6 @@ TBD
             "Details": null,
             "Success": false,
             "Severity": "warning",
-            "Category": "Security",
-            "Mutations": null
-          },
-          "hostIPCSet": {
-            "ID": "hostIPCSet",
-            "Message": "Host IPC is not configured",
-            "Details": null,
-            "Success": true,
-            "Severity": "danger",
-            "Category": "Security",
-            "Mutations": null
-          },
-          "hostNetworkSet": {
-            "ID": "hostNetworkSet",
-            "Message": "Host network is not configured",
-            "Details": null,
-            "Success": true,
-            "Severity": "danger",
-            "Category": "Security",
-            "Mutations": null
-          },
-          "hostPIDSet": {
-            "ID": "hostPIDSet",
-            "Message": "Host PID is not configured",
-            "Details": null,
-            "Success": true,
-            "Severity": "danger",
             "Category": "Security",
             "Mutations": null
           },
@@ -204,24 +172,6 @@ TBD
                 "Success": false,
                 "Severity": "warning",
                 "Category": "Efficiency",
-                "Mutations": null
-              },
-              "dangerousCapabilities": {
-                "ID": "dangerousCapabilities",
-                "Message": "Container does not have any dangerous capabilities",
-                "Details": null,
-                "Success": true,
-                "Severity": "danger",
-                "Category": "Security",
-                "Mutations": null
-              },
-              "hostPortSet": {
-                "ID": "hostPortSet",
-                "Message": "Host port is not configured",
-                "Details": null,
-                "Success": true,
-                "Severity": "warning",
-                "Category": "Security",
                 "Mutations": null
               },
               "insecureCapabilities": {
@@ -312,29 +262,11 @@ TBD
                 "Category": "Reliability",
                 "Mutations": null
               },
-              "runAsPrivileged": {
-                "ID": "runAsPrivileged",
-                "Message": "Not running as privileged",
-                "Details": null,
-                "Success": true,
-                "Severity": "danger",
-                "Category": "Security",
-                "Mutations": null
-              },
               "runAsRootAllowed": {
                 "ID": "runAsRootAllowed",
                 "Message": "Should not be allowed to run as root",
                 "Details": null,
                 "Success": false,
-                "Severity": "danger",
-                "Category": "Security",
-                "Mutations": null
-              },
-              "sensitiveContainerEnvVar": {
-                "ID": "sensitiveContainerEnvVar",
-                "Message": "The container does not set potentially sensitive environment variables",
-                "Details": null,
-                "Success": true,
                 "Severity": "danger",
                 "Category": "Security",
                 "Mutations": null
@@ -359,15 +291,6 @@ TBD
       "Namespace": "",
       "Kind": "Deployment",
       "Results": {
-        "deploymentMissingReplicas": {
-          "ID": "deploymentMissingReplicas",
-          "Message": "Multiple replicas are scheduled",
-          "Details": null,
-          "Success": true,
-          "Severity": "warning",
-          "Category": "Reliability",
-          "Mutations": null
-        },
         "metadataAndInstanceMismatched": {
           "ID": "metadataAndInstanceMismatched",
           "Message": "Label app.kubernetes.io/instance must match metadata.name",
@@ -396,33 +319,6 @@ TBD
             "Details": null,
             "Success": false,
             "Severity": "warning",
-            "Category": "Security",
-            "Mutations": null
-          },
-          "hostIPCSet": {
-            "ID": "hostIPCSet",
-            "Message": "Host IPC is not configured",
-            "Details": null,
-            "Success": true,
-            "Severity": "danger",
-            "Category": "Security",
-            "Mutations": null
-          },
-          "hostNetworkSet": {
-            "ID": "hostNetworkSet",
-            "Message": "Host network is not configured",
-            "Details": null,
-            "Success": true,
-            "Severity": "danger",
-            "Category": "Security",
-            "Mutations": null
-          },
-          "hostPIDSet": {
-            "ID": "hostPIDSet",
-            "Message": "Host PID is not configured",
-            "Details": null,
-            "Success": true,
-            "Severity": "danger",
             "Category": "Security",
             "Mutations": null
           },
@@ -476,24 +372,6 @@ TBD
                 "Category": "Efficiency",
                 "Mutations": null
               },
-              "dangerousCapabilities": {
-                "ID": "dangerousCapabilities",
-                "Message": "Container does not have any dangerous capabilities",
-                "Details": null,
-                "Success": true,
-                "Severity": "danger",
-                "Category": "Security",
-                "Mutations": null
-              },
-              "hostPortSet": {
-                "ID": "hostPortSet",
-                "Message": "Host port is not configured",
-                "Details": null,
-                "Success": true,
-                "Severity": "warning",
-                "Category": "Security",
-                "Mutations": null
-              },
               "insecureCapabilities": {
                 "ID": "insecureCapabilities",
                 "Message": "Container should not have insecure capabilities",
@@ -510,15 +388,6 @@ TBD
                 "Success": false,
                 "Severity": "warning",
                 "Category": "Security",
-                "Mutations": null
-              },
-              "livenessProbeMissing": {
-                "ID": "livenessProbeMissing",
-                "Message": "Liveness probe is configured",
-                "Details": null,
-                "Success": true,
-                "Severity": "warning",
-                "Category": "Reliability",
                 "Mutations": null
               },
               "memoryLimitsMissing": {
@@ -573,24 +442,6 @@ TBD
                   }
                 ]
               },
-              "readinessProbeMissing": {
-                "ID": "readinessProbeMissing",
-                "Message": "Readiness probe is configured",
-                "Details": null,
-                "Success": true,
-                "Severity": "warning",
-                "Category": "Reliability",
-                "Mutations": null
-              },
-              "runAsPrivileged": {
-                "ID": "runAsPrivileged",
-                "Message": "Not running as privileged",
-                "Details": null,
-                "Success": true,
-                "Severity": "danger",
-                "Category": "Security",
-                "Mutations": null
-              },
               "runAsRootAllowed": {
                 "ID": "runAsRootAllowed",
                 "Message": "Should not be allowed to run as root",
@@ -598,24 +449,6 @@ TBD
                 "Success": false,
                 "Severity": "danger",
                 "Category": "Security",
-                "Mutations": null
-              },
-              "sensitiveContainerEnvVar": {
-                "ID": "sensitiveContainerEnvVar",
-                "Message": "The container does not set potentially sensitive environment variables",
-                "Details": null,
-                "Success": true,
-                "Severity": "danger",
-                "Category": "Security",
-                "Mutations": null
-              },
-              "tagNotSpecified": {
-                "ID": "tagNotSpecified",
-                "Message": "Image tag is specified",
-                "Details": null,
-                "Success": true,
-                "Severity": "danger",
-                "Category": "Reliability",
                 "Mutations": null
               }
             }
@@ -625,12 +458,12 @@ TBD
       "CreatedTime": "0001-01-01T00:00:00Z"
     }
   ],
-  "Score": 48
+  "Score": 49
 }
 
 🚀 Upload your Polaris findings to Fairwinds Insights to see remediation advice, add teammates, integrate with Slack or Jira, and more:
 
-❯ polaris audit --helm-chart ./mywebapp --helm-values ./values/env/tes/values.yaml --upload-insights --cluster-name=my-cluster
+❯ polaris audit --only-show-failed-tests --helm-chart ./charts/mywebapp --helm-values ./values/env/tes/values.yaml --upload-insights --cluster-name=my-cluster
 ```
 
 </details>
