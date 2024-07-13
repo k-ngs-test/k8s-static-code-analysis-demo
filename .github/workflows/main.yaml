@@ -1,14 +1,14 @@
 on:
-  push: # 検証時にmainにpush時に実行されたほうが繰り返しやすいため設定
-    branches:
-      - 'main'
   pull_request:
-    branches:
-      - '*'
+    types: [opened, synchronize]
+    paths:
+      - './charts/**'
 
 jobs:
   static-code-analysis:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix:
         # ツールによってチャートのパスを明示する必要があるためリストアップしておく
