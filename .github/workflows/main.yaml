@@ -6,6 +6,7 @@ on:
     branches:
       - '*'
 
+# SARIFファイルをGitHubにアップロードする場合に必要
 # permissions:
 #   security-events: write # To upload sarif files
 
@@ -35,10 +36,10 @@ jobs:
       - name: Set up chart-testing
         uses: helm/chart-testing-action@e6669bcd63d7cb57cb4380c33043eebe5d111992 # v2.6.1
 
-#       - name: Setup polaris
-#         uses: fairwindsops/polaris/.github/actions/setup-polaris@master
-#         with:
-#           version: 5.0.0
+      - name: Setup polaris
+        uses: fairwindsops/polaris/.github/actions/setup-polaris@master
+        with:
+          version: 5.0.0
 
       - name: Run chart-testing (list-changed)
         id: list-changed
@@ -67,10 +68,10 @@ jobs:
           | xargs -I {} helm template {} -f values/env/tes/values.yaml \
           | kubeconform --summary --output json  # -depth 1の場合エラーになる
       
-#      - name: Check with Polaris
-#        run: |
-#          find ./charts -maxdepth 1 -mindepth 1 \
-#          | xargs -I {} polaris audit --only-show-failed-tests --helm-chart {} --helm-values ./values/env/tes/values.yaml
+      - name: Check with Polaris
+        run: |
+          find ./charts -maxdepth 1 -mindepth 1 \
+          | xargs -I {} polaris audit --only-show-failed-tests --helm-chart {} --helm-values ./values/env/tes/values.yaml
 
       - name: Run Trivy vulnerability scanner in IaC mode
         uses: aquasecurity/trivy-action@6e7b7d1fd3e4fef0c5fa8cce1229c54b2c9bd0d8 # tag=0.24.0
@@ -84,6 +85,7 @@ jobs:
           ignore-unfixed: true
           severity: 'CRITICAL,HIGH'
 
+# SARIFファイルをGitHubにアップロードするとき設定
 #       - name: Upload Trivy scan results to GitHub Security tab
 #         uses: github/codeql-action/upload-sarif@064a406de026ea27990a5b507b56911401ca2f95 # v3.25.12
 #         with:
