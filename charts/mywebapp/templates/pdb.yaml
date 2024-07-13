@@ -1,0 +1,9 @@
+apiVersion: policy/v1beta1 # pluto検知のためdeprecatedなバージョンを指定
+kind: PodDisruptionBudget
+metadata:
+  name: mywebapp
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: mywebapp

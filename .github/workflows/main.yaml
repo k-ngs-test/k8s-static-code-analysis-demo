@@ -31,6 +31,10 @@ jobs:
         run: |
           wget -q -O - https://github.com/FairwindsOps/polaris/releases/download/9.2.0/polaris_linux_amd64.tar.gz | tar -zxvf - -C /usr/local/bin
 
+      - name: Install Pluto
+        run: |
+          wget -q -O - https://github.com/FairwindsOps/pluto/releases/download/v5.19.4/pluto_5.19.4_linux_amd64.tar.gz | tar -zxvf - -C /usr/local/bin
+
       - name: "[${{ matrix.chart }}]: Lint Helm Chart"
         run: helm lint ./charts/${{ matrix.chart }}
         continue-on-error: true
@@ -45,6 +49,11 @@ jobs:
         run: polaris audit --only-show-failed-tests --helm-chart ./charts/${{ matrix.chart }}
         continue-on-error: true
         id: polaris
+
+      - name: "[${{ matrix.chart }}]: Run Pluto"
+        run: pluto detect-files -d ./charts/${{ matrix.chart }}
+        continue-on-error: true
+        id: pluto
 
       - name: "[${{ matrix.chart }}]: Run Trivy vulnerability scanner in IaC mode"
         uses: aquasecurity/trivy-action@6e7b7d1fd3e4fef0c5fa8cce1229c54b2c9bd0d8 # tag=0.24.0
@@ -62,7 +71,7 @@ jobs:
 
       - name: Check results
         run: |
-          if [ ${{ steps.helm_lint.outcome }} == 'failure' ] || [ ${{ steps.kubeconform.outcome }} == 'failure' ] || [ ${{ steps.trivy.outcome }} == 'failure' ] || [ ${{ steps.polaris.outcome }} == 'failure' ]; then
+          if [ ${{ steps.helm_lint.outcome }} == 'failure' ] || [ ${{ steps.kubeconform.outcome }} == 'failure' ] || [ ${{ steps.pluto.outcome }} == 'failure' ] || [ ${{ steps.polaris.outcome }} == 'failure' || [ ${{ steps.trivy.outcome }} == 'failure' ] ]; then
             echo "One or more steps failed"
             exit 1
           else
