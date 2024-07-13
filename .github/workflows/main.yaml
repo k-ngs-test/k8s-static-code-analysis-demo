@@ -20,6 +20,10 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install github-comment
+        run: |
+          wget -q -O - https://github.com/suzuki-shunsuke/github-comment/releases/download/v6.0.4/github-comment_6.0.4_linux_amd64.tar.gz | tar -zxvf - -C /usr/local/bin
+
       - name: Set up helm
         uses: azure/setup-helm@fe7b79cd5ee1e45176fcad797de68ecaf3ca4814 # v4.2.0
 
@@ -36,22 +40,22 @@ jobs:
           wget -q -O - https://github.com/FairwindsOps/pluto/releases/download/v5.19.4/pluto_5.19.4_linux_amd64.tar.gz | tar -zxvf - -C /usr/local/bin
 
       - name: "[${{ matrix.chart }}]: Lint Helm Chart"
-        run: helm lint ./charts/${{ matrix.chart }}
+        run: github-comment exec -- helm lint ./charts/${{ matrix.chart }}
         continue-on-error: true
         id: helm_lint
 
       - name: "[${{ matrix.chart }}]: Run kubeconform"
-        run: kubeconform --summary -output json ./charts/${{ matrix.chart }}
+        run: github-comment exec -- kubeconform --summary -output json ./charts/${{ matrix.chart }}
         continue-on-error: true
         id: kubeconform
 
       - name: "[${{ matrix.chart }}]: Run Polaris audit"
-        run: polaris audit --only-show-failed-tests --helm-chart ./charts/${{ matrix.chart }}
+        run: github-comment exec -- polaris audit --only-show-failed-tests --helm-chart ./charts/${{ matrix.chart }}
         continue-on-error: true
         id: polaris
 
       - name: "[${{ matrix.chart }}]: Run Pluto"
-        run: pluto detect-files -d ./charts/${{ matrix.chart }}
+        run: github-comment exec -- pluto detect-files -d ./charts/${{ matrix.chart }}
         continue-on-error: true
         id: pluto
 
