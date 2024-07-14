@@ -3,3 +3,25 @@
 base:
   org: abnoumaru
   repo: k8s-static-code-analysis-demo
+
+exec:
+  static-code-analysis:
+    - when: ExitCode !=0
+      template: |
+        異常終了した静的解析があります。
+
+        ## 実行コマンド
+
+        ```
+        $ {{.Command}}
+        ```
+
+        ## ExitCode
+
+        {{.ExitCode}}
+
+        # Output:
+
+        ```
+        {{.CombinedOutput}}
+        ```
