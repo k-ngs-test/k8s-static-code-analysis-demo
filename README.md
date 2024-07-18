@@ -15,8 +15,11 @@ k8s-static-code-analysis-demo
 
 ### act
 
+ローカル実行のためにevents.jsonでPull Requestsのイベントを指定している。  
+--eventpath については [こちら](https://nektosact.com/usage/index.html?highlight=event#using-event-file-to-provide-complete-event-payload)
+
 ```console
-% act pull_request --container-architecture linux/amd64
+% make run_act
 ```
 
 ### helm lint
@@ -28,7 +31,7 @@ k8s-static-code-analysis-demo
 ### kubeconform
 
 ```console
-% kubeconform --summary -output json ./charts/mywebapp
+% helm template ./charts/mywebapp | kubeconform --summary -output pretty
 ```
 
 ### polaris
@@ -65,3 +68,4 @@ k8s-static-code-analysis-demo
 - https://dev.to/aws-builders/improving-your-cicd-pipeline-helm-charts-security-scanning-with-trivy-and-github-actions-3315
 - https://weblog.grimoh.net/entry/2022/01/02/100000
 - https://qiita.com/suzuki0430/items/8b02f4d978ed11cd89b8
+- https://nektosact.com/usage/index.html?highlight=event#using-event-file-to-provide-complete-event-payload
