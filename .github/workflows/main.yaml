@@ -7,4 +7,4 @@ on:
 
 jobs:
   static-code-analysis:
-    uses: k-ngs-test/gh-workflows/.github/workflows/_static_analysis_template.yaml@main
+    uses: k-ngs-test/gh-workflows/.github/workflows/_helm_static_analysis_template.yaml@main
