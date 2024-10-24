@@ -10,3 +10,5 @@ jobs:
     uses: k-ngs-test/gh-workflows/.github/workflows/_helm_static_analysis_template.yaml@main
   kustomize-static-code-analysis:
     uses: k-ngs-test/gh-workflows/.github/workflows/_kustomize_static_analysis_template.yaml@main
+    with:
+      kustomize-path: "./base"
