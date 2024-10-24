@@ -7,4 +7,6 @@ on:
 
 jobs:
   static-code-analysis:
+    permissions:
+      pull-requests: write
     uses: k-ngs-test/gh-workflows/.github/workflows/_helm_static_analysis_template.yaml@main
