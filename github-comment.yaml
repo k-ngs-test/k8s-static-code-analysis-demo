@@ -1,7 +1,7 @@
 ---
 # skip_no_token: true
 base:
-  org: abnoumaru
+  org: k-ngs-test
   repo: k8s-static-code-analysis-demo
 
 exec:
